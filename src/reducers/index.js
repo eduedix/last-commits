@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { CHANGE_GITHUB_USERNAME, REQUEST_REPOS,
-   RECEIVE_REPOS, TOGGLE_REPO } from '../actions';
+   RECEIVE_REPOS, TOGGLE_REPO,
+   RECEIVE_COMMITS } from '../actions';
    
 const githubUsername = (state = '', action) => {
     switch (action.type) {
@@ -39,10 +40,20 @@ const toggledRepos = (state = [], action) => {
     }
 }
 
+const commits = (state = {}, action) => {
+    switch (action.type) {
+        case RECEIVE_COMMITS:
+            return { ...state, [action.repo]: action.commits }
+        default:
+            return state
+    }
+}
+
 const rootReducer = combineReducers({
    githubUsername,
    repos,
    toggledRepos,
+   commits,
 })
 
 export default rootReducer

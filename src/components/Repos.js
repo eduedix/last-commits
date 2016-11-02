@@ -4,6 +4,8 @@ class Repos extends Component {
     static propTypes = {
         repos: PropTypes.array,
         toggleRepo: PropTypes.func,
+        fetchCommits: PropTypes.func,
+        githubUsername: PropTypes.string,
     }
     
     constructor() {
@@ -11,10 +13,13 @@ class Repos extends Component {
         this.onRepoClicked = this.onRepoClicked.bind(this);
     }
     
-    onRepoClicked(repoId) {
+    onRepoClicked(repo) {
         return (event) => {
-            const { toggleRepo } = this.props;
-            toggleRepo(repoId)
+            const { toggleRepo, fetchCommits, toggledRepos, githubUsername } = this.props;
+            toggleRepo(repo);
+            if (toggledRepos.indexOf(repo) === -1) {
+                fetchCommits(githubUsername, repo);
+            }
         }
     }
     
@@ -23,7 +28,7 @@ class Repos extends Component {
         return (
         <ul>
             {repos.map((repo) =>
-                <li key={repo.id} onClick={this.onRepoClicked(repo.id)}>
+                <li key={repo.id} onClick={this.onRepoClicked(repo.name)}>
                     {repo.name} {repo.stargazers_count}
                 </li>
             )}
