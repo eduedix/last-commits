@@ -2,8 +2,12 @@ export const CHANGE_GITHUB_USERNAME = 'CHANGE_GITHUB_USERNAME';
 export const REQUEST_REPOS = 'REQUEST_REPOS';
 export const RECEIVE_REPOS = 'RECEIVE_REPOS';
 
+export const SELECT_REPO = 'SELECT_REPO';
+export const UNSELECT_REPO = 'UNSELECT_REPO';
+
 export const REQUEST_COMMITS = 'REQUEST_COMMITS';
 export const RECEIVE_COMMITS = 'RECEIVE_COMMITS';
+
 
 export const changeGithubUsername = githubUsername => ({
     type: CHANGE_GITHUB_USERNAME,
@@ -19,15 +23,26 @@ export const receiveRepos = (githubUsername, json) => ({
     type: RECEIVE_REPOS,
     githubUsername,
     repos: json,
-    // repos: json.map(child => child.data)
 })
 
 export const fetchRepos = githubUsername => dispatch => {
     dispatch(requestRepos(githubUsername));
-    return fetch(`https://api.github.com/users/${githubUsername}/repos`)
+    return fetch(`https://api.github.com/users/${githubUsername}/repos?per_page=100`)
         .then(response => response.json())
         .then(json => dispatch(receiveRepos(githubUsername, json)))
 }
+
+export const selectRepo = (githubUsername, repo) => ({
+    type: SELECT_REPO,
+    githubUsername,
+    repo
+})
+
+export const unselectRepo = (githubUsername, repo) => ({
+    type: UNSELECT_REPO,
+    githubUsername,
+    repo
+})
 
 export const requestCommits = (githubUsername, repo) => ({
     type: REQUEST_COMMITS,
