@@ -11,7 +11,7 @@ import Search from 'material-ui/svg-icons/action/search'
 
 import { changeGithubUsername, fetchRepos } from '../actions';
 
-import Repos from '../components/Repos';
+import Repos from '../containers/Repos';
 
 class App extends Component {
   static propTypes = {
@@ -55,7 +55,7 @@ class App extends Component {
           Number of repos: {repos.length}
           <br />
         </p>
-        <Repos repos={repos} />
+        <Repos />
       </div>
     )
   }
