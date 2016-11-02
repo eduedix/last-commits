@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { CHANGE_GITHUB_USERNAME, REQUEST_REPOS,
-   RECEIVE_REPOS, SELECT_REPO, UNSELECT_REPO } from '../actions';
+   RECEIVE_REPOS, TOGGLE_REPO } from '../actions';
    
 const githubUsername = (state = '', action) => {
     switch (action.type) {
@@ -24,12 +24,16 @@ const repos = (state = [], action) => {
     }
 }
 
-const repo = (state = null, action) => {
+const toggledRepos = (state = [], action) => {
     switch (action.type) {
-        case SELECT_REPO:
-            return action.repo
-        case UNSELECT_REPO:
-            return null
+        case TOGGLE_REPO:
+            if (state.indexOf(action.repo) === -1) 
+                return [...state, action.repo]
+            else {
+                return state.filter((repo) => {
+                    return repo !== action.repo
+                })
+            }
         default:
             return state
     }
@@ -38,7 +42,7 @@ const repo = (state = null, action) => {
 const rootReducer = combineReducers({
    githubUsername,
    repos,
-   repo,
+   toggledRepos,
 })
 
 export default rootReducer

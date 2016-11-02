@@ -2,8 +2,7 @@ export const CHANGE_GITHUB_USERNAME = 'CHANGE_GITHUB_USERNAME';
 export const REQUEST_REPOS = 'REQUEST_REPOS';
 export const RECEIVE_REPOS = 'RECEIVE_REPOS';
 
-export const SELECT_REPO = 'SELECT_REPO';
-export const UNSELECT_REPO = 'UNSELECT_REPO';
+export const TOGGLE_REPO = 'TOGGLE_REPO';
 
 export const REQUEST_COMMITS = 'REQUEST_COMMITS';
 export const RECEIVE_COMMITS = 'RECEIVE_COMMITS';
@@ -32,15 +31,8 @@ export const fetchRepos = githubUsername => dispatch => {
         .then(json => dispatch(receiveRepos(githubUsername, json)))
 }
 
-export const selectRepo = (githubUsername, repo) => ({
-    type: SELECT_REPO,
-    githubUsername,
-    repo
-})
-
-export const unselectRepo = (githubUsername, repo) => ({
-    type: UNSELECT_REPO,
-    githubUsername,
+export const toggleRepo = (repo) => ({
+    type: TOGGLE_REPO,
     repo
 })
 
