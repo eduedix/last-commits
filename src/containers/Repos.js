@@ -7,7 +7,7 @@ import { toggleRepo, fetchCommits } from '../actions';
 const mapStateToProps = state => ({
     githubUsername: state.githubUsername,
     repos: state.repos,
-    toggledRepos: state.toggledRepos
+    toggledRepos: state.toggledRepos,
 })
 
 const mapDispatchToProps = dispatch => (
