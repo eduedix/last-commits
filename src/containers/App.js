@@ -13,12 +13,14 @@ import { changeGithubUsername, fetchRepos } from '../actions';
 
 import Repos from '../containers/Repos';
 
+import { Pie } from 'react-chartjs-2';
+
 class App extends Component {
   static propTypes = {
     githubUsername: PropTypes.string,
     changeGithubUsername: PropTypes.func,
     fetchRepos: PropTypes.func,
-    repos: PropTypes.array,
+    reposLength: PropTypes.number,
   }
   
   constructor() {
@@ -36,7 +38,15 @@ class App extends Component {
   }
   
   render() {
-    const { githubUsername, repos } = this.props
+    const { githubUsername, reposLength, starsData, backgroundColor, repoLabels } = this.props
+    const data = {
+      labels: repoLabels,
+      datasets: [{
+        data: starsData,
+        backgroundColor
+      }]
+    };
+
     return (
       <div className="App">
         <div className="App-header">
@@ -52,8 +62,12 @@ class App extends Component {
         </IconButton>
         
         <p className="App-intro">
-          Number of repos: {repos.length}
+          Number of repos: {reposLength}
           <br />
+          {reposLength > 0 ?
+            <Pie data={data} />
+            : null
+          }
         </p>
         <Repos />
       </div>
@@ -61,10 +75,29 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  githubUsername: state.githubUsername,
-  repos: state.repos,
-});
+const generateRandomColor = () => {
+  const r = Math.floor(Math.random() * 200);
+  const g = Math.floor(Math.random() * 200);
+  const b = Math.floor(Math.random() * 200);
+  return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+}
+
+const mapStateToProps = (state) => {
+  const filteredRepos = state.repos.sort((a, b) => a.stargazers_count > b.stargazers_count).slice(0,20);
+  const colors = filteredRepos.map((repo) => {
+    return generateRandomColor()
+  });
+  const starsData = filteredRepos.map((repo) => repo.stargazers_count);
+  const repoLabels = filteredRepos.map((repo) => repo.name)
+  
+  return {
+    githubUsername: state.githubUsername,
+    reposLength: state.repos.length,
+    backgroundColor: colors,
+    starsData,
+    repoLabels,
+  }
+};
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   changeGithubUsername,

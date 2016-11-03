@@ -9,7 +9,6 @@ class Repos extends Component {
         toggleRepo: PropTypes.func,
         fetchCommits: PropTypes.func,
         githubUsername: PropTypes.string,
-        commits: PropTypes.object,
     }
     
     constructor() {
