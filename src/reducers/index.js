@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { CHANGE_GITHUB_USERNAME, REQUEST_REPOS,
    RECEIVE_REPOS, TOGGLE_REPO,
-   RECEIVE_COMMITS } from '../actions';
+   RECEIVE_COMMITS, CHANGE_SEARCHED_COMMIT_MESSAGE } from '../actions';
    
 const githubUsername = (state = '', action) => {
     switch (action.type) {
@@ -49,11 +49,21 @@ const commits = (state = {}, action) => {
     }
 }
 
+const searchedCommits = (state = {}, action) => {
+    switch (action.type) {
+        case CHANGE_SEARCHED_COMMIT_MESSAGE:
+            return { ...state, [action.repo]: action.searchedCommitMessage }
+        default:
+            return state
+    }
+}
+
 const rootReducer = combineReducers({
    githubUsername,
    repos,
    toggledRepos,
    commits,
+   searchedCommits,
 })
 
 export default rootReducer

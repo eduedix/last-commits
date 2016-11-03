@@ -1,11 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 
+import Commits from '../containers/Commits'
+
 class Repos extends Component {
     static propTypes = {
         repos: PropTypes.array,
+        toggledRepos: PropTypes.array,
         toggleRepo: PropTypes.func,
         fetchCommits: PropTypes.func,
         githubUsername: PropTypes.string,
+        commits: PropTypes.object,
     }
     
     constructor() {
@@ -24,12 +28,15 @@ class Repos extends Component {
     }
     
     render() {
-        const { repos } = this.props;
+        const { repos, toggledRepos } = this.props;
         return (
         <ul>
             {repos.map((repo) =>
-                <li key={repo.id} onClick={this.onRepoClicked(repo.name)}>
-                    {repo.name} {repo.stargazers_count}
+                <li key={repo.id}>
+                    <p onClick={this.onRepoClicked(repo.name)}>
+                        {repo.name} {repo.stargazers_count}
+                    </p>
+                    {toggledRepos.indexOf(repo.name) !== -1 ? <Commits repo={repo.name} /> : null}
                 </li>
             )}
         </ul>

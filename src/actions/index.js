@@ -7,6 +7,8 @@ export const TOGGLE_REPO = 'TOGGLE_REPO';
 export const REQUEST_COMMITS = 'REQUEST_COMMITS';
 export const RECEIVE_COMMITS = 'RECEIVE_COMMITS';
 
+export const CHANGE_SEARCHED_COMMIT_MESSAGE = 'CHANGE_SEARCHED_COMMIT_MESSAGE';
+
 
 export const changeGithubUsername = githubUsername => ({
     type: CHANGE_GITHUB_USERNAME,
@@ -55,4 +57,10 @@ export const fetchCommits = (githubUsername, repo) => dispatch => {
         .then(response => response.json())
         .then(json => dispatch(receiveCommits(githubUsername, repo, json)))
 }
+
+export const changeSearchedCommitMessage = (repo, searchedCommitMessage) => ({
+    type: CHANGE_SEARCHED_COMMIT_MESSAGE,
+    repo,
+    searchedCommitMessage,
+})
     
