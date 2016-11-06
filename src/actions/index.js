@@ -49,7 +49,7 @@ export const fetchCommits = (githubUsername, repo) => dispatch => {
     dispatch(requestCommits(githubUsername, repo));
     return fetch(`https://api.github.com/repos/${githubUsername}/${repo}/commits`)
         .then(response => response.json())
-        .then(json => dispatch(receiveCommits(githubUsername, repo, json)))
+        .then(json => dispatch(receiveCommits(githubUsername, repo, json.slice(0, 20))))
 }
 
 export const changeSearchedCommitMessage = (repo, searchedCommitMessage) => ({

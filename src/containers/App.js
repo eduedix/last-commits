@@ -16,8 +16,6 @@ import GithubUserCharts from '../containers/GithubUserCharts';
 
 class App extends Component {
   static propTypes = {
-    githubUsername: PropTypes.string,
-    changeGithubUsername: PropTypes.func,
     fetchRepos: PropTypes.func,
     reposLength: PropTypes.number,
   }
@@ -61,21 +59,18 @@ class App extends Component {
         </IconButton>
         
         <p className="App-intro">
-          Number of repos: {reposLength}
-          <br />
           {reposLength > 0 ?
             <GithubUserCharts /> 
             : null
           }
         </p>
-        <Repos />
+        {reposLength > 0 ? <Repos /> : null }
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  githubUsername: state.githubUsername,
   reposLength: state.repos.length,
 })
 

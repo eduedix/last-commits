@@ -33,7 +33,7 @@ class Repos extends Component {
             listStyleType: 'none',
         }}>
             {repos.map((repo) =>
-                <li key={repo.id}>
+                <li key={repo.name}>
                     <p onClick={this.onRepoClicked(repo.name)}
                         style={{ backgroundColor: 'grey' }}>
                         {repo.name} {repo.stargazers_count}
