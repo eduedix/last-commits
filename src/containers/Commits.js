@@ -13,7 +13,7 @@ const mapStateToProps = (state, props) => {
 
     return {
         searchedCommitMessage,
-        commits: searchedCommitMessage.length > 0 ? filteredCommits : commits,
+        commits: searchedCommitMessage.length > 0 ? filteredCommits.splice(0, 20) : commits.splice(0, 20),
     }
 }
 
