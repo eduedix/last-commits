@@ -12,8 +12,7 @@ import Search from 'material-ui/svg-icons/action/search'
 import { changeGithubUsername, fetchRepos } from '../actions';
 
 import Repos from '../containers/Repos';
-
-import { Pie } from 'react-chartjs-2';
+import GithubUserCharts from '../containers/GithubUserCharts';
 
 class App extends Component {
   static propTypes = {
@@ -23,29 +22,29 @@ class App extends Component {
     reposLength: PropTypes.number,
   }
   
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      githubUsername: '',
+    }
     this.onGithubUsernameChanged = this.onGithubUsernameChanged.bind(this);
     this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
   }
   
   onGithubUsernameChanged(event) {
-    this.props.changeGithubUsername(event.target.value);
+    this.setState({
+      githubUsername: event.target.value,
+    });
   }
   
   onSearchButtonClicked(event) {
-    this.props.fetchRepos(this.props.githubUsername);
+    this.props.fetchRepos(this.state.githubUsername);
   }
   
   render() {
-    const { githubUsername, reposLength, starsData, backgroundColor, repoLabels } = this.props
-    const data = {
-      labels: repoLabels,
-      datasets: [{
-        data: starsData,
-        backgroundColor
-      }]
-    };
+    const { reposLength } = this.props;
+    const { githubUsername } = this.state;
+
 
     return (
       <div className="App">
@@ -65,7 +64,7 @@ class App extends Component {
           Number of repos: {reposLength}
           <br />
           {reposLength > 0 ?
-            <Pie data={data} />
+            <GithubUserCharts /> 
             : null
           }
         </p>
@@ -75,29 +74,10 @@ class App extends Component {
   }
 }
 
-const generateRandomColor = () => {
-  const r = Math.floor(Math.random() * 200);
-  const g = Math.floor(Math.random() * 200);
-  const b = Math.floor(Math.random() * 200);
-  return 'rgb(' + r + ', ' + g + ', ' + b + ')';
-}
-
-const mapStateToProps = (state) => {
-  const filteredRepos = state.repos.sort((a, b) => a.stargazers_count > b.stargazers_count).slice(0,20);
-  const colors = filteredRepos.map((repo) => {
-    return generateRandomColor()
-  });
-  const starsData = filteredRepos.map((repo) => repo.stargazers_count);
-  const repoLabels = filteredRepos.map((repo) => repo.name)
-  
-  return {
-    githubUsername: state.githubUsername,
-    reposLength: state.repos.length,
-    backgroundColor: colors,
-    starsData,
-    repoLabels,
-  }
-};
+const mapStateToProps = (state) => ({
+  githubUsername: state.githubUsername,
+  reposLength: state.repos.length,
+})
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   changeGithubUsername,

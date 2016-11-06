@@ -1,4 +1,3 @@
-export const CHANGE_GITHUB_USERNAME = 'CHANGE_GITHUB_USERNAME';
 export const REQUEST_REPOS = 'REQUEST_REPOS';
 export const RECEIVE_REPOS = 'RECEIVE_REPOS';
 
@@ -9,11 +8,6 @@ export const RECEIVE_COMMITS = 'RECEIVE_COMMITS';
 
 export const CHANGE_SEARCHED_COMMIT_MESSAGE = 'CHANGE_SEARCHED_COMMIT_MESSAGE';
 
-
-export const changeGithubUsername = githubUsername => ({
-    type: CHANGE_GITHUB_USERNAME,
-    githubUsername
-})
 
 export const requestRepos = githubUsername => ({
     type: REQUEST_REPOS,

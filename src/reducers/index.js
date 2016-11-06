@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux';
-import { CHANGE_GITHUB_USERNAME, REQUEST_REPOS,
+import { REQUEST_REPOS,
    RECEIVE_REPOS, TOGGLE_REPO,
    RECEIVE_COMMITS, CHANGE_SEARCHED_COMMIT_MESSAGE } from '../actions';
    
 const githubUsername = (state = '', action) => {
     switch (action.type) {
-        case CHANGE_GITHUB_USERNAME:
-            return action.githubUsername
         case REQUEST_REPOS:
             return action.githubUsername
         default:
