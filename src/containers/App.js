@@ -57,14 +57,12 @@ class App extends Component {
         <IconButton onClick={this.onSearchButtonClicked}>
           <Search />
         </IconButton>
-        
-        <p className="App-intro">
-          {reposLength > 0 ?
-            <GithubUserCharts /> 
-            : null
-          }
-        </p>
-        {reposLength > 0 ? <Repos /> : null }
+        {reposLength > 0 ? 
+          <div>
+            <GithubUserCharts />
+            <Repos />
+          </div> : null
+        }
       </div>
     )
   }
