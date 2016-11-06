@@ -29,10 +29,13 @@ class Repos extends Component {
     render() {
         const { repos, toggledRepos } = this.props;
         return (
-        <ul>
+        <ul style={{
+            listStyleType: 'none',
+        }}>
             {repos.map((repo) =>
                 <li key={repo.id}>
-                    <p onClick={this.onRepoClicked(repo.name)}>
+                    <p onClick={this.onRepoClicked(repo.name)}
+                        style={{ backgroundColor: 'grey' }}>
                         {repo.name} {repo.stargazers_count}
                     </p>
                     {toggledRepos.indexOf(repo.name) !== -1 ? <Commits repo={repo.name} /> : null}

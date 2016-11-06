@@ -28,11 +28,14 @@ class Commits extends Component {
                     onChange={this.onSearchCommitMessageChanged}
                     value={searchedCommitMessage}
                 />
-                <ul>
+                <ol style={{  }}>
                     {commits.map((commit, i) => 
-                        <li key={`${repo}-commit-${i}`}>{commit.commit.message}</li>
+                        <li key={`${repo}-commit-${i}`}
+                            style={{ textAlign: 'left' }}>
+                            {commit.commit.message}
+                        </li>
                     )}
-                </ul>
+                </ol>
             </div>
         );
     }
