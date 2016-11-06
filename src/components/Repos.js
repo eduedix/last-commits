@@ -36,7 +36,7 @@ class Repos extends Component {
                 <li key={repo.name}>
                     <p onClick={this.onRepoClicked(repo.name)}
                         style={{ backgroundColor: 'grey' }}>
-                        {repo.name} {repo.stargazers_count}
+                        {repo.name} : {repo.stargazers_count} stars
                     </p>
                     {toggledRepos.indexOf(repo.name) !== -1 ? <Commits repo={repo.name} /> : null}
                 </li>

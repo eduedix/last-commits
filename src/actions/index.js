@@ -24,6 +24,11 @@ export const fetchRepos = githubUsername => dispatch => {
     dispatch(requestRepos(githubUsername));
     return fetch(`https://api.github.com/users/${githubUsername}/repos?per_page=100`)
         .then(response => response.json())
+        .then(json =>
+            json.map(repo => 
+                ({ name: repo.name, stargazers_count: repo.stargazers_count })
+                )
+            )
         .then(json => dispatch(receiveRepos(githubUsername, json)))
 }
 
