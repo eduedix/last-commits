@@ -21,7 +21,11 @@ class GithubUserCharts extends Component {
 
     render() {
         return (
-            <Pie data={this.chartData} />
+            <Pie
+                data={this.chartData}
+                height={300}
+                options={{ maintainAspectRatio: false, legend: { display: false }} }
+            />
         )
     }
 }
