@@ -16,8 +16,6 @@ class Commits extends Component {
     }
     
     onSearchCommitMessageChanged(event) {
-        // searchCommitMessage();
-        // console.log(event);
         this.props.changeSearchedCommitMessage(this.props.repo, event.target.value);
     }
     
