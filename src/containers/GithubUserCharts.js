@@ -3,7 +3,7 @@ import GithubUserCharts from '../components/GithubUserCharts';
 
 const mapStateToProps = (state, props) => {
 
-    const filteredRepos = state.repos.sort((a, b) => a.stargazers_count > b.stargazers_count).slice(0, 20);
+    const filteredRepos = state.repos.data.sort((a, b) => a.stargazers_count > b.stargazers_count).slice(0, 20);
 
     return {
         repos: filteredRepos,

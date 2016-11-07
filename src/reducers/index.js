@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import { REQUEST_REPOS,
-   RECEIVE_REPOS, TOGGLE_REPO,
-   RECEIVE_COMMITS, CHANGE_SEARCHED_COMMIT_MESSAGE } from '../actions';
-   
+import {
+    REQUEST_REPOS, RECEIVE_REPOS, TOGGLE_REPO,
+    REQUEST_COMMITS, RECEIVE_COMMITS,
+    CHANGE_SEARCHED_COMMIT_MESSAGE
+} from '../actions';
+
 const githubUsername = (state = '', action) => {
     switch (action.type) {
         case REQUEST_REPOS:
@@ -12,12 +14,15 @@ const githubUsername = (state = '', action) => {
     }
 }
 
-const repos = (state = [], action) => {
+const repos = (state = {
+    isFetching: false,
+    data: []
+}, action) => {
     switch (action.type) {
         case REQUEST_REPOS:
-            return []
+            return { isFetching: true, data: [] }
         case RECEIVE_REPOS:
-            return action.repos
+            return { isFetching: false, data: action.repos }
         default:
             return state
     }
@@ -26,7 +31,7 @@ const repos = (state = [], action) => {
 const toggledRepos = (state = [], action) => {
     switch (action.type) {
         case TOGGLE_REPO:
-            if (state.indexOf(action.repo) === -1) 
+            if (state.indexOf(action.repo) === -1)
                 return [...state, action.repo]
             else {
                 return state.filter((repo) => {
@@ -40,8 +45,10 @@ const toggledRepos = (state = [], action) => {
 
 const commits = (state = {}, action) => {
     switch (action.type) {
+        case REQUEST_COMMITS:
+            return { ...state, [action.repo]: { isFetching: true, data: [] } }
         case RECEIVE_COMMITS:
-            return { ...state, [action.repo]: action.commits }
+            return { ...state, [action.repo]: { isFetching: false, data: action.commits } }
         default:
             return state
     }
@@ -57,11 +64,11 @@ const searchedCommits = (state = {}, action) => {
 }
 
 const rootReducer = combineReducers({
-   githubUsername,
-   repos,
-   toggledRepos,
-   commits,
-   searchedCommits,
+    githubUsername,
+    repos,
+    toggledRepos,
+    commits,
+    searchedCommits,
 })
 
 export default rootReducer

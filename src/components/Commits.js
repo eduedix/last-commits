@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import TextField from 'material-ui/TextField';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class Commits extends Component {
     static propTypes = {
@@ -8,6 +9,7 @@ class Commits extends Component {
         repo: PropTypes.string,
         searchedCommitMessage: PropTypes.string,
         changeSearchedCommitMessage: PropTypes.func,
+        isFetchingCommits: PropTypes.bool,
     }
     
     constructor(){
@@ -20,7 +22,10 @@ class Commits extends Component {
     }
     
     render() {
-        const { searchedCommitMessage, commits, repo } = this.props;
+        const { searchedCommitMessage, commits, isFetchingCommits, repo } = this.props;
+        if (isFetchingCommits) {
+            return <CircularProgress />
+        }
         return (
             <div>
                 <TextField 

@@ -69,7 +69,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  reposLength: state.repos.length,
+  reposLength: state.repos.data.length,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
